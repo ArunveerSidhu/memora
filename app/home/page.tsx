@@ -1,8 +1,10 @@
 "use client";
 
-import { useSession, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { Navbar, ReusableSection, ScrollSection } from "@/components";
+import { FolderPlus, FolderOpen, FolderClock, FolderHeart } from "lucide-react";
 
 export default function HomePage() {
   const { data: session, status } = useSession();
@@ -28,44 +30,31 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow">
-        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-              Memora
-            </h1>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-3">
-                {session.user?.image && (
-                  <img
-                    src={session.user.image}
-                    alt={session.user.name || "User"}
-                    className="h-8 w-8 rounded-full"
-                  />
-                )}
-                <span className="text-sm font-medium text-gray-700">
-                  {session.user?.name}
-                </span>
-              </div>
-              <button
-                onClick={() => signOut({ callbackUrl: "/login" })}
-                className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
-              >
-                Sign out
-              </button>
-            </div>
-          </div>
+      <Navbar />
+      <main className="mx-auto max-w-7xl px-4 pt-12 sm:px-6 lg:px-8">
+        <div className="flex flex-col items-center justify-center">
+          <p className="text-4xl font-semibold">Welcome back, <span className="font-serif italic font-medium">{session.user?.name?.split(" ")[0]}!</span></p>
         </div>
-      </header>
-
-      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="rounded-lg bg-white p-6 shadow">
-          <h2 className="mb-4 text-xl font-semibold text-gray-900">
-            Welcome back, {session.user?.name?.split(" ")[0]}!
-          </h2>
-          <p className="text-gray-600">
-            You're successfully logged in with Google.
-          </p>
+        <div className="flex flex-col items-center justify-center mt-2">
+          <p className="text-xl">What would you like to do today?</p>
+        </div>
+        <div className="flex flex-row gap-4 items-center justify-center mt-4">
+          <button className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 active:outline-none cursor-pointer active:scale-99">
+            <FolderPlus className="h-5 w-5" />
+            Create Binder
+          </button>
+          <button className="flex items-center gap-2 bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 active:outline-none cursor-pointer active:scale-99">
+            <FolderOpen className="h-5 w-5" />
+            Go To Binder   
+          </button>
+        </div>
+        <div className="flex flex-col pt-16 gap-8">
+        <ReusableSection title="Recently Opened" icon={FolderClock}>
+          <ScrollSection />
+        </ReusableSection>
+        <ReusableSection title="favorites" icon={FolderHeart}>
+          <ScrollSection />
+        </ReusableSection>
         </div>
       </main>
     </div>
