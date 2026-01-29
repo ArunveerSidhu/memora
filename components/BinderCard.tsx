@@ -1,16 +1,21 @@
+"use client";
 import { Star, Trash, Clock, Calendar } from "lucide-react";
-
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 export function BinderCard() {
+    const router = useRouter();
+
     return (
-        <div className="group flex flex-col bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 w-64 shrink-0 overflow-hidden border border-gray-100">
+        <div className="group cursor-pointer active:scale-99 flex flex-col bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 w-64 shrink-0 overflow-hidden border border-gray-100" onClick={() => router.push("/binder")}>
             <div className="relative h-52 overflow-hidden">
-                <img 
-                    src="/images/default.jpg" 
+                <Image 
+                    src="/images/default.png" 
                     alt="Binder Card" 
-                    className="w-full h-full object-cover brightness-90 group-hover:scale-105 transition-transform duration-300" 
+                    fill
+                    className="object-cover brightness-90 group-hover:scale-105 transition-transform duration-300" 
                 />
-                <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-5">
+                <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent z-1" />
+                <div className="absolute bottom-0 left-0 right-0 p-5 z-10">
                     <h1 className="text-2xl font-bold text-white drop-shadow-lg">Binder Name</h1>
                 </div>
             </div>
